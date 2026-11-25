@@ -1,0 +1,1402 @@
+/* ==========================================================================
+   AMORETTE - Romantic Candlelit Letter-Writing Experience
+   Styles & Design Token Implementation
+   ========================================================================== */
+
+:root {
+  /* Brand Atmospheric Dark Burgundy */
+  --bg-deep-wine: #2A0A12;
+  --bg-gradient: radial-gradient(circle at 50% 20%, #44111E 0%, #2A0A12 70%, #1A050B 100%);
+  --panel-burgundy: #3A0F1B;
+  --surface-dark-burgundy: #4A0E1E;
+  --accent-burgundy: #6B1426;
+  --crimson-cherry: #8E1B2E;
+  --crimson-glow: rgba(142, 27, 46, 0.45);
+  --rose-soft: #C9788A;
+  --blush-light: #F2D4D9;
+  --antique-gold: #C9A24B;
+  --antique-gold-glow: #DFC17B;
+  --warm-ivory: #F6EBDD;
+  --ivory-muted: #D9CBB9;
+
+  /* Stationery Paper Tones */
+  --paper-cream: #FAF3E8;
+  --paper-ivory: #FFFDF9;
+  --paper-parchment: #F3E7D3;
+  --paper-blush: #FCEEF1;
+  --paper-sage: #EEF3EB;
+  --paper-blue: #EDF3F8;
+  --paper-lavender: #F4F0FA;
+
+  /* Ink Colors */
+  --ink-charcoal: #2C2223;
+  --ink-brown: #4A2C2A;
+  --ink-navy: #1B2838;
+  --ink-burgundy: #66101F;
+  --ink-gold: #8C6A21;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(10, 2, 5, 0.35);
+  --shadow-md: 0 8px 24px rgba(12, 2, 6, 0.5);
+  --shadow-lg: 0 16px 42px rgba(10, 2, 5, 0.65);
+  --shadow-paper: 0 10px 30px rgba(15, 3, 7, 0.45), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-envelope: 0 18px 45px rgba(10, 2, 5, 0.6), 0 3px 8px rgba(0, 0, 0, 0.3);
+
+  /* Transitions */
+  --trans-fast: 0.18s cubic-bezier(0.2, 0, 0.2, 1);
+  --trans-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --trans-bounce: 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Fonts */
+  --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-script: 'Pinyon Script', 'Great Vibes', cursive;
+  --font-handwriting: 'Caveat', cursive;
+}
+
+/* Base Reset & Candlelit Ambient Room */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-deep-wine);
+  background-image: 
+    radial-gradient(ellipse at 50% 15%, rgba(197, 120, 80, 0.12) 0%, transparent 65%),
+    var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--warm-ivory);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Subtle Candle Glow Vignette Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 40%, transparent 40%, rgba(15, 3, 7, 0.55) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* App Container */
+#app {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   DICTIONARY-STYLE BRAND HEADER CARD
+   Line 1: AMORETTE (bold caps, wide letter-spacing, modern clean sans)
+   Line 2: /ˈæm.ə.ɹɛt/ • noun — little love; beloved.
+   ========================================================================== */
+.amorette-header-wrapper {
+  padding: 20px 24px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.amorette-definition-card {
+  pointer-events: auto;
+  display: inline-block;
+  background-color: var(--panel-burgundy);
+  border: 1px solid rgba(201, 162, 75, 0.22);
+  border-radius: 14px;
+  padding: 10px 18px;
+  text-decoration: none;
+  color: var(--warm-ivory);
+  box-shadow: 0 4px 18px rgba(12, 2, 6, 0.4);
+  transition: transform var(--trans-fast), border-color var(--trans-fast), background-color var(--trans-fast);
+  cursor: pointer;
+  user-select: none;
+}
+
+.amorette-definition-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(201, 162, 75, 0.5);
+  background-color: #42111E;
+}
+
+.definition-word {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--warm-ivory);
+  line-height: 1.2;
+}
+
+.definition-meaning {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--ivory-muted);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.definition-meaning .phonetic {
+  color: var(--rose-soft);
+  font-weight: 400;
+}
+
+.definition-meaning .pos {
+  font-style: italic;
+  font-family: var(--font-serif);
+  color: var(--blush-light);
+}
+
+.definition-meaning .bullet {
+  color: var(--antique-gold);
+  margin: 0 3px;
+}
+
+/* Header Compact Mode for Writing Steps */
+.amorette-header-wrapper.compact .definition-meaning {
+  display: none;
+}
+.amorette-header-wrapper.compact .amorette-definition-card {
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+.amorette-header-wrapper.compact .definition-word {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+}
+
+/* Header Quiet Mode for Recipient Screen */
+.amorette-header-wrapper.quiet {
+  opacity: 0.55;
+  transition: opacity var(--trans-smooth);
+}
+.amorette-header-wrapper.quiet:hover {
+  opacity: 1;
+}
+
+/* Header Actions (Sound toggle, draft status) */
+.header-actions {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.audio-toggle-btn {
+  background: var(--panel-burgundy);
+  border: 1px solid rgba(201, 162, 75, 0.25);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--warm-ivory);
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(10, 2, 5, 0.3);
+  transition: all var(--trans-fast);
+}
+
+.audio-toggle-btn:hover {
+  border-color: var(--antique-gold);
+  background-color: var(--surface-dark-burgundy);
+  transform: scale(1.05);
+}
+
+.draft-pill-indicator {
+  font-size: 11px;
+  color: var(--rose-soft);
+  background: rgba(58, 15, 27, 0.8);
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 162, 75, 0.15);
+  display: none;
+}
+.draft-pill-indicator.active {
+  display: inline-block;
+}
+
+/* ==========================================================================
+   BUTTONS & CONTROLS (Crimson Pill with Gold Hairline)
+   ========================================================================== */
+.btn-crimson {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--crimson-cherry);
+  color: var(--warm-ivory);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  padding: 10px 22px;
+  border-radius: 24px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 14px var(--crimson-glow);
+  transition: all var(--trans-fast);
+}
+
+.btn-crimson:hover {
+  background-color: #A32036;
+  border-color: var(--antique-gold);
+  box-shadow: 0 6px 20px rgba(142, 27, 46, 0.6), 0 0 10px rgba(201, 162, 75, 0.3);
+  transform: translateY(-1.5px);
+}
+
+.btn-crimson:active {
+  transform: translateY(0.5px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--panel-burgundy);
+  color: var(--warm-ivory);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+  padding: 9px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(201, 162, 75, 0.3);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--trans-fast);
+}
+
+.btn-secondary:hover {
+  background-color: var(--surface-dark-burgundy);
+  border-color: var(--antique-gold);
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  background-color: var(--antique-gold);
+  color: #2A0A12;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(201, 162, 75, 0.35);
+}
+.btn-gold:hover {
+  background-color: var(--antique-gold-glow);
+  box-shadow: 0 6px 22px rgba(201, 162, 75, 0.55);
+}
+
+/* ==========================================================================
+   SCREEN MANAGEMENT
+   ========================================================================== */
+.amorette-screen {
+  display: none;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 20px 80px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.amorette-screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Gold Section Dividers */
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 28px auto;
+  color: var(--antique-gold);
+  opacity: 0.65;
+  font-size: 13px;
+}
+.gold-divider::before, .gold-divider::after {
+  content: '';
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(to right, transparent, var(--antique-gold), transparent);
+}
+
+/* ==========================================================================
+   1. DESK DASHBOARD
+   Writing desk scene with stack of envelopes, pen, stamp pad, letterbox
+   ========================================================================== */
+.desk-hero-section {
+  text-align: center;
+  padding: 24px 0 32px;
+}
+
+.desk-title {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: 400;
+  color: var(--warm-ivory);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.desk-subtitle {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--rose-soft);
+  max-width: 480px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+.desk-action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+/* Interactive Writing Desk Scene */
+.writing-desk-canvas {
+  position: relative;
+  background: #340D17;
+  border-radius: 20px;
+  border: 1px solid rgba(201, 162, 75, 0.25);
+  box-shadow: inset 0 2px 14px rgba(0,0,0,0.4), 0 16px 40px rgba(10, 2, 5, 0.5);
+  padding: 40px 30px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  overflow: hidden;
+}
+
+.writing-desk-canvas::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(201, 162, 75, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Desk Objects */
+.desk-object {
+  cursor: pointer;
+  transition: transform var(--trans-bounce), filter var(--trans-fast);
+  text-align: center;
+}
+.desk-object:hover {
+  transform: translateY(-6px) scale(1.03);
+}
+
+.desk-object-label {
+  display: block;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  color: var(--ivory-muted);
+  margin-top: 8px;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+
+/* Envelope Stack Graphic */
+.envelope-stack {
+  position: relative;
+  width: 140px;
+  height: 96px;
+}
+.stack-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform var(--trans-fast);
+}
+.stack-layer.layer-1 {
+  background: #F4D6DC;
+  transform: rotate(-6deg) translate(-4px, 4px);
+}
+.stack-layer.layer-2 {
+  background: #FAF3E8;
+  transform: rotate(3deg) translate(2px, 2px);
+}
+.stack-layer.layer-top {
+  background: #4A0E1E;
+  border: 1px solid rgba(201, 162, 75, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Letterbox */
+.letterbox-slot-graphic {
+  width: 110px;
+  height: 80px;
+  background: #250810;
+  border: 2px solid var(--antique-gold);
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.6);
+}
+.letterbox-flap {
+  width: 76px;
+  height: 14px;
+  background: linear-gradient(to bottom, #DFC27D, #A37E28);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+/* Stationery Shelves (Drafts, Sent, Collection) */
+.desk-shelves-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.desk-shelf-card {
+  background: var(--panel-burgundy);
+  border: 1px solid rgba(201, 162, 75, 0.2);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.shelf-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--warm-ivory);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shelf-empty-state {
+  font-size: 12px;
+  color: var(--rose-soft);
+  font-style: italic;
+  padding: 12px 0;
+}
+
+.draft-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background var(--trans-fast);
+}
+.draft-item:hover {
+  background: rgba(201, 162, 75, 0.12);
+}
+
+/* ==========================================================================
+   2. ENVELOPE STUDIO (3D Transforms, Scalloped Flap & Airmail Borders)
+   ========================================================================== */
+.studio-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .studio-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.envelope-stage {
+  perspective: 1200px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(58, 15, 27, 0.4);
+  border-radius: 20px;
+  border: 1px solid rgba(201, 162, 75, 0.15);
+  min-height: 420px;
+}
+
+/* 3D Envelope Container */
+.envelope-3d-box {
+  position: relative;
+  width: 320px;
+  height: 215px;
+  transform-style: preserve-3d;
+  transition: transform var(--trans-smooth);
+  box-shadow: var(--shadow-envelope);
+  border-radius: 10px;
+}
+
+/* Airmail Diagonal Border (Ref Image 5) */
+.envelope-3d-box.airmail-style {
+  background: #FAF3E7;
+  padding: 12px;
+  background-image: repeating-linear-gradient(
+    135deg,
+    #B22222 0px, #B22222 14px,
+    #FAF3E7 14px, #FAF3E7 20px,
+    #1E3F66 20px, #1E3F66 34px,
+    #FAF3E7 34px, #FAF3E7 40px
+  );
+}
+.envelope-3d-box.airmail-style .envelope-inner-body {
+  background: #FAF3E7;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+
+/* Envelope Face Front (Recipient address & stamp) */
+.envelope-front-face {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.2), inset 0 -2px 6px rgba(0,0,0,0.3);
+}
+
+.envelope-stamp-slot {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 68px;
+  height: 86px;
+  border: 1px dashed rgba(201, 162, 75, 0.5);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(255,255,255,0.06);
+}
+
+.envelope-recipient-area {
+  margin-top: 48px;
+  margin-left: 20px;
+  max-width: 200px;
+}
+
+.envelope-recipient-name {
+  font-family: var(--font-script);
+  font-size: 26px;
+  line-height: 1.1;
+  color: var(--crimson-cherry);
+}
+
+.envelope-recipient-address {
+  font-family: var(--font-handwriting);
+  font-size: 13px;
+  line-height: 1.3;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+
+.envelope-sender-return {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  font-family: var(--font-handwriting);
+  font-size: 10.5px;
+  opacity: 0.75;
+}
+
+/* Envelope 3D Back Flap (For sealing & opening) */
+.envelope-back-face {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.envelope-flap-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 110px;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+/* Scalloped Embossed Flap (Ref Image 4) */
+.envelope-flap-top.scalloped-flap {
+  clip-path: path("M 0 0 L 320 0 C 300 30, 310 60, 270 70 C 230 80, 210 105, 160 110 C 110 105, 90 80, 50 70 C 10 60, 20 30, 0 0 Z");
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Classic Pointed Flap */
+.envelope-flap-top.pointed-flap {
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+}
+
+/* Square Flap */
+.envelope-flap-top.square-flap {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 65%, 0% 65%);
+}
+
+.envelope-flap-top.open {
+  transform: rotateX(-180deg);
+}
+
+/* Studio Controls Sidebar */
+.studio-controls-panel {
+  background: var(--panel-burgundy);
+  border: 1px solid rgba(201, 162, 75, 0.2);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.control-group {
+  margin-bottom: 22px;
+}
+
+.control-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--antique-gold);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.swatch-picker {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.color-swatch-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--trans-fast), border-color var(--trans-fast);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.color-swatch-btn.active, .color-swatch-btn:hover {
+  transform: scale(1.18);
+  border-color: var(--antique-gold);
+}
+
+.text-input-field {
+  width: 100%;
+  background: rgba(20, 4, 8, 0.5);
+  border: 1px solid rgba(201, 162, 75, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--warm-ivory);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  transition: border-color var(--trans-fast);
+}
+.text-input-field:focus {
+  border-color: var(--antique-gold);
+  background: rgba(20, 4, 8, 0.75);
+}
+
+/* ==========================================================================
+   3. STAMP ALBUM (Philatelic Book with Perforations)
+   ========================================================================== */
+.stamp-album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.stamp-album-card {
+  background: rgba(30, 6, 12, 0.7);
+  border: 1px solid rgba(201, 162, 75, 0.2);
+  border-radius: 12px;
+  padding: 16px 12px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform var(--trans-bounce), border-color var(--trans-fast);
+}
+.stamp-album-card:hover, .stamp-album-card.selected {
+  transform: translateY(-4px) scale(1.04);
+  border-color: var(--antique-gold);
+  box-shadow: 0 6px 18px rgba(201, 162, 75, 0.25);
+}
+
+.stamp-album-name {
+  font-size: 11px;
+  color: var(--warm-ivory);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.stamp-album-origin {
+  font-size: 9.5px;
+  color: var(--antique-gold);
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* Stamp Perforations */
+.amorette-stamp-wrapper {
+  position: relative;
+  display: inline-block;
+  filter: drop-shadow(0 3px 6px rgba(10, 2, 5, 0.4));
+  transition: transform var(--trans-fast);
+}
+
+.amorette-stamp-perforations {
+  position: relative;
+  padding: 5px;
+  background: #FAF3E8;
+  /* Perforated Mask with Stamp Serration Pattern */
+  mask-image: radial-gradient(circle 3px at 0 0, transparent 0, transparent 3px, black 3px);
+  -webkit-mask: 
+    radial-gradient(circle 3.2px at 50% 0, transparent 0, transparent 3.2px, black 3.5px) top / 8px 100%,
+    radial-gradient(circle 3.2px at 50% 100%, transparent 0, transparent 3.2px, black 3.5px) bottom / 8px 100%,
+    radial-gradient(circle 3.2px at 0 50%, transparent 0, transparent 3.2px, black 3.5px) left / 100% 8px,
+    radial-gradient(circle 3.2px at 100% 50%, transparent 0, transparent 3.2px, black 3.5px) right / 100% 8px;
+  -webkit-mask-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+}
+
+.stamp-artwork {
+  display: block;
+  width: 100px;
+  height: 128px;
+}
+
+.postmark-overlay {
+  position: absolute;
+  top: -10px;
+  left: -20px;
+  width: 140px;
+  height: 80px;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   4. WRITING EDITOR SCREEN
+   Paper on desk, mobile friendly, date, greeting, body, P.S., sign-off,
+   decorations, washi tape, polaroids with pushpins
+   ========================================================================== */
+.editor-workspace {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 10px 0 40px;
+}
+
+/* The Paper Sheet */
+.letter-paper-sheet {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  min-height: 720px;
+  background-color: var(--paper-cream);
+  border-radius: 4px;
+  box-shadow: var(--shadow-paper);
+  padding: 50px 48px;
+  color: var(--ink-brown);
+  transition: background-color var(--trans-smooth);
+}
+
+@media (max-width: 600px) {
+  .letter-paper-sheet {
+    padding: 36px 24px;
+  }
+}
+
+/* Lined Paper Lines */
+.letter-paper-sheet.paper-lined {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    rgba(180, 150, 120, 0.3) 31px,
+    rgba(180, 150, 120, 0.3) 32px
+  );
+  line-height: 32px;
+}
+
+/* Parchment Texture */
+.letter-paper-sheet.paper-parchment {
+  background-color: var(--paper-parchment);
+  box-shadow: 0 10px 30px rgba(10,2,5,0.4), inset 0 0 40px rgba(120, 80, 40, 0.12);
+  border: 1px solid rgba(180, 140, 100, 0.4);
+}
+
+/* Floral Botanical Border */
+.letter-paper-sheet.paper-floral {
+  border: 12px solid transparent;
+  border-image: linear-gradient(to bottom right, #D8A4B0, #EACCD4, #A8B89E) 20;
+}
+
+/* Letter Form Fields */
+.letter-date-field {
+  text-align: right;
+  font-family: var(--font-handwriting);
+  font-size: 15px;
+  margin-bottom: 24px;
+  outline: none;
+}
+
+.letter-greeting-field {
+  font-family: var(--font-script);
+  font-size: 32px;
+  color: var(--crimson-cherry);
+  margin-bottom: 20px;
+  outline: none;
+  line-height: 1.2;
+}
+
+.letter-body-field {
+  min-height: 280px;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  line-height: 32px;
+  outline: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.letter-signoff-wrapper {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.letter-signoff-field {
+  font-family: var(--font-script);
+  font-size: 24px;
+  outline: none;
+  color: var(--crimson-cherry);
+}
+
+.letter-sender-field {
+  font-family: var(--font-handwriting);
+  font-size: 20px;
+  outline: none;
+  margin-top: 6px;
+}
+
+.letter-ps-field {
+  margin-top: 32px;
+  font-family: var(--font-handwriting);
+  font-size: 16px;
+  font-style: italic;
+  opacity: 0.85;
+  outline: none;
+}
+
+/* Floating Toolbar for Editor */
+.editor-toolbar {
+  position: sticky;
+  top: 72px;
+  z-index: 50;
+  background: var(--panel-burgundy);
+  border: 1px solid rgba(201, 162, 75, 0.25);
+  border-radius: 30px;
+  padding: 6px 14px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 20px rgba(10, 2, 5, 0.4);
+  max-width: 620px;
+}
+
+.toolbar-select {
+  background: rgba(20, 4, 8, 0.6);
+  border: 1px solid rgba(201, 162, 75, 0.25);
+  border-radius: 14px;
+  padding: 4px 8px;
+  color: var(--warm-ivory);
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Polaroid Photo Card */
+.amorette-polaroid {
+  position: absolute;
+  width: 140px;
+  background: #FAF8F5;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(10, 2, 5, 0.35);
+  padding: 10px 10px 14px;
+  z-index: 20;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+.amorette-polaroid:active {
+  cursor: grabbing;
+}
+
+.polaroid-pin-wrapper {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 25;
+}
+
+.polaroid-photo-frame {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  background: #3A242A;
+  border-radius: 2px;
+}
+
+.polaroid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroid-change-label {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.polaroid-change-label:hover {
+  opacity: 1;
+}
+
+.polaroid-caption {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: #33221E;
+  text-align: center;
+  margin-top: 8px;
+  outline: none;
+  line-height: 1.2;
+}
+
+.polaroid-delete-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--crimson-cherry);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.amorette-polaroid:hover .polaroid-delete-btn {
+  opacity: 1;
+}
+
+/* Washi Tape Strip */
+.washi-tape-strip {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  border-radius: 2px;
+  opacity: 0.85;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  cursor: grab;
+  z-index: 15;
+}
+
+/* Draggable Sticker */
+.dropped-sticker {
+  position: absolute;
+  z-index: 18;
+  cursor: grab;
+  filter: drop-shadow(0 2px 6px rgba(10, 2, 5, 0.25));
+}
+
+/* Decorations Drawer Panel */
+.decorations-tray {
+  margin-top: 24px;
+  background: var(--panel-burgundy);
+  border: 1px solid rgba(201, 162, 75, 0.2);
+  border-radius: 16px;
+  padding: 16px 20px;
+}
+.decorations-shelf {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  overflow-x: auto;
+  padding: 8px 4px;
+}
+.sticker-item-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: transform var(--trans-bounce);
+}
+.sticker-item-btn:hover {
+  transform: scale(1.25);
+}
+
+/* ==========================================================================
+   5. SEALING CEREMONY SCREEN
+   Letter folding in thirds, sliding into envelope, 3D flap closing,
+   wax spoon molten puddle, tap & hold squish and settle
+   ========================================================================== */
+.sealing-chamber {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.sealing-stage {
+  perspective: 1200px;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.wax-pour-action-area {
+  margin-top: 24px;
+}
+
+.wax-pour-button {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #8E1B2E, #4A0E1E);
+  border: 3px solid var(--antique-gold);
+  color: var(--warm-ivory);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(142, 27, 46, 0.5);
+  transition: all var(--trans-bounce);
+}
+.wax-pour-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 30px rgba(142, 27, 46, 0.7);
+}
+
+/* Molten Wax Puddle Animation */
+.molten-wax-puddle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 45% 40%, #8E1B2E, #5E0D1B);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 30;
+}
+.molten-wax-puddle.poured {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ==========================================================================
+   6. SEND & SHARE SCREEN
+   Shareable link, WhatsApp, Telegram, Messenger, Passcode & Capsule locks
+   ========================================================================== */
+.send-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--panel-burgundy);
+  border: 1px solid rgba(201, 162, 75, 0.25);
+  border-radius: 20px;
+  padding: 36px 30px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.share-link-box {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0;
+  background: rgba(20, 4, 8, 0.6);
+  border: 1px solid rgba(201, 162, 75, 0.3);
+  border-radius: 12px;
+  padding: 6px 6px 6px 14px;
+  align-items: center;
+}
+
+.share-link-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--warm-ivory);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+}
+
+.share-social-grid {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.capsule-toggle-section {
+  text-align: left;
+  border-top: 1px solid rgba(201, 162, 75, 0.15);
+  padding-top: 20px;
+  margin-top: 24px;
+}
+
+/* ==========================================================================
+   7. RECIPIENT OPENING CEREMONY (Matching Video Exactly)
+   Metallic mail slot at top, envelope sliding out with gentle swing,
+   crimson pill button, 3D flap opens, letter slides out onto pinned board
+   ========================================================================== */
+.recipient-ceremony-container {
+  min-height: 85vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+/* Metallic Mail Slot at Top of Screen (Video Match) */
+.metallic-mail-slot {
+  width: 280px;
+  height: 38px;
+  background: linear-gradient(to bottom, #8C7355 0%, #B8963E 25%, #E5C368 50%, #8C7355 100%);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.4);
+  position: relative;
+  margin: 10px auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.metallic-mail-slot::after {
+  content: '';
+  width: 230px;
+  height: 8px;
+  background: #140408;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.mail-slot-heading {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--antique-gold);
+  margin-bottom: 24px;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+/* Envelope Drop & Pendulum Swing */
+.recipient-envelope-drop-wrapper {
+  position: relative;
+  perspective: 1200px;
+  margin: 20px auto 30px;
+  transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+  transform-origin: top center;
+}
+
+.recipient-envelope-drop-wrapper.sliding-out {
+  animation: mailSlotEmerge 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards, pendulumSwing 3.5s ease-in-out infinite 1.4s;
+}
+
+@keyframes mailSlotEmerge {
+  0% {
+    transform: translateY(-240px) scale(0.7);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(12px) scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pendulumSwing {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(1.8deg); }
+  75% { transform: rotate(-1.8deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* "Click here to claim your mail" Pill Button (Video Match) */
+.claim-mail-pill-btn {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+  padding: 8px 24px;
+  border-radius: 24px;
+  background-color: var(--crimson-cherry);
+  color: var(--warm-ivory);
+  border: 1px solid rgba(201, 162, 75, 0.4);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(142, 27, 46, 0.5);
+  transition: all var(--trans-fast);
+  margin-top: 14px;
+}
+.claim-mail-pill-btn:hover {
+  background-color: #A62137;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(142, 27, 46, 0.7);
+}
+
+/* The Pinned Velvet/Cork Board Scene */
+.pinned-board-scene {
+  display: none;
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  min-height: 700px;
+  background-color: #380C18;
+  background-image: 
+    radial-gradient(circle at 50% 30%, rgba(201, 162, 75, 0.12) 0%, transparent 70%),
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 2px, transparent 2px, transparent 4px);
+  border-radius: 24px;
+  border: 1px solid rgba(201, 162, 75, 0.25);
+  box-shadow: inset 0 2px 14px rgba(0,0,0,0.6), 0 20px 50px rgba(10, 2, 5, 0.7);
+  padding: 40px 20px;
+  margin: 20px auto 40px;
+}
+.pinned-board-scene.active {
+  display: block;
+  animation: boardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes boardReveal {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Recipient Reaction Emojis */
+.reaction-bar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+.reaction-btn {
+  background: var(--panel-burgundy);
+  border: 1px solid rgba(201, 162, 75, 0.3);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform var(--trans-bounce), background-color var(--trans-fast);
+}
+.reaction-btn:hover {
+  transform: scale(1.22);
+  background: var(--surface-dark-burgundy);
+}
+
+/* Floating Emoji Bursts */
+.floating-reaction-particle {
+  position: fixed;
+  pointer-events: none;
+  font-size: 28px;
+  z-index: 999;
+  animation: floatUpBurst 1.8s ease-out forwards;
+}
+@keyframes floatUpBurst {
+  0% { opacity: 1; transform: translate(0, 0) scale(0.6); }
+  50% { opacity: 0.9; transform: translate(var(--tx, 0), -120px) scale(1.3); }
+  100% { opacity: 0; transform: translate(var(--tx, 0), -240px) scale(0.8); }
+}
+
+/* Print Friendly Styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .amorette-header-wrapper, .editor-toolbar, .decorations-tray, .reaction-bar, .desk-action-buttons {
+    display: none !important;
+  }
+  .letter-paper-sheet {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "description": "An interactive letter that gently shakes on hover, adding a playful, engaging touch to personal messages.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
