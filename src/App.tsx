@@ -176,7 +176,7 @@ function ReadOnlyLetter({
       style={
         {
           '--letter-colour': fontColour,
-          '--letter-size': `${fontSize}px`,
+          '--letter-size': `${fontSize * 1.25}px`,
           backgroundImage: `linear-gradient(135deg, rgb(255 255 255 / 6%), rgb(83 40 30 / 4%)), url("${paperTexture.src}")`,
         } as React.CSSProperties
       }
@@ -218,6 +218,16 @@ function RevealPage({
     setCopied(true);
   };
 
+  const openLetter = () => {
+    setOpened(true);
+    window.requestAnimationFrame(() => {
+      document.querySelector('.reveal-stage')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    });
+  };
+
   return (
     <main className={`reveal-shell ${opened ? 'letter-is-open' : ''}`}>
       {!recipientMode && (
@@ -233,51 +243,54 @@ function RevealPage({
       </header>
 
       <section className="reveal-stage" aria-live="polite">
-        <div className={`reveal-composition composition ${opened ? 'is-open' : 'is-closed'}`}>
-          <div className="real-envelope reveal-envelope" aria-hidden="true">
-            <img
-              alt=""
-              className={`envelope-state-image envelope-closed ${opened ? '' : 'is-visible'}`}
-              src={envelope.closed}
-            />
-            <img
-              alt=""
-              className={`envelope-state-image envelope-open ${opened ? 'is-visible' : ''}`}
-              src={envelope.open}
+        <div className="reveal-canvas">
+          <div className={`reveal-composition composition ${opened ? 'is-open' : 'is-closed'}`}>
+            <div className="real-envelope reveal-envelope" aria-hidden="true">
+              <img
+                alt=""
+                className={`envelope-state-image envelope-closed ${opened ? '' : 'is-visible'}`}
+                src={envelope.closed}
+              />
+              <img
+                alt=""
+                className={`envelope-state-image envelope-open ${opened ? 'is-visible' : ''}`}
+                src={envelope.open}
+              />
+            </div>
+
+            {draft.photos.map((photo, index) => (
+              <Polaroid index={index} key={photo.id} photo={photo} />
+            ))}
+
+            {draft.selectedStickers.map((stickerIndex, position) => {
+              const sticker = stickerItems[stickerIndex];
+              if (!sticker) return null;
+              return (
+                <img
+                  alt={sticker.name}
+                  className={`sticker keepsake-sticker sticker-memory-${position}`}
+                  draggable={false}
+                  key={`${sticker.name}-${position}`}
+                  src={sticker.src}
+                  style={{ '--pulse-stagger': `${position * 55}ms` } as React.CSSProperties}
+                />
+              );
+            })}
+
+            <ReadOnlyLetter
+              fontColour={draft.fontColour}
+              fontSize={draft.fontSize}
+              fontStyle={font.className}
+              greeting={draft.greeting}
+              message={draft.message}
+              paperTexture={paper}
+              signoff={draft.signoff}
             />
           </div>
-
-          {draft.photos.map((photo, index) => (
-            <Polaroid index={index} key={photo.id} photo={photo} />
-          ))}
-
-          {draft.selectedStickers.map((stickerIndex, position) => {
-            const sticker = stickerItems[stickerIndex];
-            if (!sticker) return null;
-            return (
-              <img
-                alt={sticker.name}
-                className={`sticker keepsake-sticker sticker-memory-${position}`}
-                draggable={false}
-                key={`${sticker.name}-${position}`}
-                src={sticker.src}
-              />
-            );
-          })}
-
-          <ReadOnlyLetter
-            fontColour={draft.fontColour}
-            fontSize={draft.fontSize}
-            fontStyle={font.className}
-            greeting={draft.greeting}
-            message={draft.message}
-            paperTexture={paper}
-            signoff={draft.signoff}
-          />
         </div>
 
         {!opened && (
-          <button className="open-letter-button" onClick={() => setOpened(true)} type="button">
+          <button className="open-letter-button" onClick={openLetter} type="button">
             Open your letter
             <span aria-hidden="true">↓</span>
           </button>
@@ -369,6 +382,7 @@ function LetterPreview({
             className={`sticker keepsake-sticker sticker-memory-${position}`}
             key={sticker.name}
             src={sticker.src}
+            style={{ '--pulse-stagger': `${position * 55}ms` } as React.CSSProperties}
           />
         );
       })}
