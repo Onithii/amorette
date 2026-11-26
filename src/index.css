@@ -2714,3 +2714,80 @@
     font-size: 11px;
   }
 }
+
+  .polaroid-image {
+    position: relative;
+  }
+
+  .photo-corner {
+    position: absolute;
+    z-index: 1;
+    width: 15px;
+    height: 15px;
+    background: linear-gradient(145deg, #fffdf6 0%, #e8dac7 100%);
+    filter: drop-shadow(0 1px 1px rgb(57 31 25 / 22%));
+    pointer-events: none;
+  }
+
+  .photo-corner-top-left {
+    top: 0;
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
+  .photo-corner-top-right {
+    top: 0;
+    right: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+
+  .photo-corner-bottom-left {
+    bottom: 0;
+    left: 0;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+  }
+
+  .photo-corner-bottom-right {
+    right: 0;
+    bottom: 0;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+
+  .reveal-heading .reveal-teaser {
+    margin: 8px 0 0;
+    color: #81525f;
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.015em;
+    line-height: 1.2;
+    text-transform: none;
+  }
+
+  .reveal-composition.is-open .envelope-open {
+    animation: reveal-flap-open 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .reveal-composition.is-open .paper-letter {
+    animation-delay: 480ms;
+    animation-duration: 950ms;
+  }
+
+  @keyframes reveal-flap-open {
+    0% {
+      clip-path: inset(100% 0 0);
+      opacity: 0;
+      transform: translate(-50%, -50%) scaleY(0.9);
+    }
+    52% {
+      clip-path: inset(0 0 36%);
+      opacity: 1;
+      transform: translate(-50%, -50%) scaleY(1.02);
+    }
+    100% {
+      clip-path: inset(0);
+      opacity: 1;
+      transform: translate(-50%, -50%) scaleY(1);
+    }
+  }

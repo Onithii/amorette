@@ -153,6 +153,10 @@ function Polaroid({ photo, index }: { photo: Photo; index: number }) {
     <div className={`polaroid polaroid-memory-${index}`}>
       <div className="polaroid-image">
         <img alt={photo.name} src={photo.src} />
+        <span aria-hidden="true" className="photo-corner photo-corner-top-left" />
+        <span aria-hidden="true" className="photo-corner photo-corner-top-right" />
+        <span aria-hidden="true" className="photo-corner photo-corner-bottom-left" />
+        <span aria-hidden="true" className="photo-corner photo-corner-bottom-right" />
       </div>
       <div className="polaroid-caption">a little memory</div>
     </div>
@@ -247,6 +251,7 @@ function RevealPage({
         <p>AMORETTE</p>
         <h1>{opened ? 'A letter, just for you' : 'Something lovely is waiting'}</h1>
         <span>{opened ? 'Kept in every word.' : 'Sent with a little bit of heart.'}</span>
+        {!opened && <p className="reveal-teaser">A little something is waiting inside.</p>}
       </header>
 
       <section className="reveal-stage" aria-live="polite">
@@ -317,7 +322,7 @@ function RevealPage({
             </button>
           </div>
           <span className={`copy-confirmation ${copied ? 'is-visible' : ''}`} role="status">
-            Copied! Off it goes.
+            Link copied
           </span>
         </section>
       )}
