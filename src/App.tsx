@@ -724,12 +724,13 @@ export default function App() {
       .forEach((file) => {
         const reader = new FileReader();
         reader.onload = () => {
-          if (typeof reader.result !== 'string') return;
+          const src = reader.result;
+          if (typeof src !== 'string') return;
           setPhotos((current) => {
             if (current.length >= 4) return current;
             return [
               ...current,
-              { id: `${file.name}-${file.lastModified}-${crypto.randomUUID()}`, name: file.name, src: reader.result },
+              { id: `${file.name}-${file.lastModified}-${crypto.randomUUID()}`, name: file.name, src },
             ];
           });
         };
