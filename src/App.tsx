@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 type Tab = 'Envelope' | 'Paper' | 'Photos' | 'Stickers';
+type AppView = 'home' | 'editor' | 'reveal';
 type Photo = { id: string; name: string; src: string };
 type Draft = {
   envelopeIndex: number;
@@ -20,31 +21,37 @@ const envelopeDesigns = [
     name: 'Olive Keepsake',
     closed: '/assets/envelope-collection-olive.webp',
     open: '/assets/envelope-olive-open.png',
+    openFilter: 'none',
   },
   {
     name: 'Midnight Botanica',
     closed: '/assets/envelope-collection-navy.png',
     open: '/assets/envelope-olive-open.png',
+    openFilter: 'grayscale(1) sepia(1) hue-rotate(170deg) saturate(3) brightness(.65)',
   },
   {
     name: 'Ivory Heirloom',
     closed: '/assets/envelope-collection-ivory-seal.png',
     open: '/assets/envelope-ivory-open.png',
+    openFilter: 'none',
   },
   {
     name: 'Blush Lace',
     closed: '/assets/envelope-collection-pink-lace.webp',
     open: '/assets/envelope-ivory-open.png',
+    openFilter: 'sepia(.45) saturate(1.25) hue-rotate(300deg) brightness(1.06)',
   },
   {
     name: 'Burgundy Ribbon',
     closed: '/assets/envelope-collection-burgundy-bow.webp',
     open: '/assets/envelope-burgundy-open.png',
+    openFilter: 'none',
   },
   {
     name: 'Embossed Ivory',
     closed: '/assets/envelope-collection-ivory-embossed.webp',
     open: '/assets/envelope-ivory-open.png',
+    openFilter: 'none',
   },
 ];
 
@@ -255,6 +262,7 @@ function RevealPage({
                 alt=""
                 className={`envelope-state-image envelope-open ${opened ? 'is-visible' : ''}`}
                 src={envelope.open}
+                style={{ '--envelope-open-filter': envelope.openFilter } as React.CSSProperties}
               />
             </div>
 
@@ -317,6 +325,66 @@ function RevealPage({
   );
 }
 
+function HomePage({
+  onGetStarted,
+  onHome,
+}: {
+  onGetStarted: () => void;
+  onHome: () => void;
+}) {
+  return (
+    <main className="home-page">
+      <header className="home-nav">
+        <a
+          className="home-brand"
+          href="/"
+          onClick={(event) => {
+            event.preventDefault();
+            onHome();
+          }}
+        >
+          Amorette
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#about">About</a>
+          <a href="#letters">Letters</a>
+          <a href="#sign-in">Sign In</a>
+        </nav>
+      </header>
+
+      <section aria-labelledby="home-title" className="home-hero" id="about">
+        <h1 id="home-title">Amorette</h1>
+        <p className="home-definition">
+          <span>/ˈæm.ə.ɹɛt/</span>
+          <span className="home-part-of-speech">• noun</span>
+          <span className="home-meaning">— little love; beloved.</span>
+        </p>
+        <div aria-hidden="true" className="home-divider" />
+        <p className="home-subtitle">
+          Send someone a real letter. Design a textured envelope, pen your
+          <br className="home-subtitle-break" /> heart on creamy parchment, and press a wax seal.
+        </p>
+
+        <div className="home-envelope-stage" id="letters">
+          <img
+            alt="A deep burgundy textured envelope"
+            className="home-envelope"
+            src="/assets/envelope-burgundy-closed.png"
+          />
+          <span aria-hidden="true" className="home-wax-seal">
+            <img alt="" src="/assets/seal-cupid.png" />
+            <span>♥</span>
+          </span>
+        </div>
+
+        <button className="home-get-started" onClick={onGetStarted} type="button">
+          Get Started
+        </button>
+      </section>
+    </main>
+  );
+}
+
 function LetterPreview({
   envelope,
   paperTexture,
@@ -367,6 +435,7 @@ function LetterPreview({
           alt=""
           className={`envelope-state-image envelope-open ${open ? 'is-visible' : ''}`}
           src={envelope.open}
+          style={{ '--envelope-open-filter': envelope.openFilter } as React.CSSProperties}
         />
       </button>
 
@@ -676,7 +745,12 @@ function StickersPanel({
 export default function App() {
   const draft = readDraft();
   const initialParams = new URLSearchParams(window.location.search);
-  const [view, setView] = useState(initialParams.get('view') === 'reveal' ? 'reveal' : 'editor');
+  const [view, setView] = useState<AppView>(() => {
+    if (initialParams.get('view') === 'reveal' || initialParams.get('shared') === '1') {
+      return 'reveal';
+    }
+    return initialParams.get('view') === 'editor' ? 'editor' : 'home';
+  });
   const recipientMode = initialParams.get('shared') === '1';
   const [tab, setTab] = useState<Tab>('Envelope');
   const [envelopeIndex, setEnvelopeIndex] = useState(draft.envelopeIndex ?? 0);
@@ -695,6 +769,19 @@ export default function App() {
   );
   const [photos, setPhotos] = useState<Photo[]>(draft.photos ?? []);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('view') === 'reveal' || params.get('shared') === '1') {
+        setView('reveal');
+      } else {
+        setView(params.get('view') === 'editor' ? 'editor' : 'home');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   useEffect(() => {
     try {
@@ -772,20 +859,23 @@ export default function App() {
     photos,
   };
 
-  const showReveal = () => {
-    window.history.pushState({}, '', `${window.location.pathname}?view=reveal`);
+  const navigateTo = (nextView: AppView) => {
+    const url = nextView === 'home' ? window.location.pathname : `${window.location.pathname}?view=${nextView}`;
+    window.history.pushState({}, '', url);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setView('reveal');
+    setView(nextView);
   };
 
-  const showEditor = () => {
-    window.history.pushState({}, '', window.location.pathname);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setView('editor');
-  };
+  const showReveal = () => navigateTo('reveal');
+  const showEditor = () => navigateTo('editor');
+  const showHome = () => navigateTo('home');
 
   if (view === 'reveal') {
     return <RevealPage draft={currentDraft} onBack={showEditor} recipientMode={recipientMode} />;
+  }
+
+  if (view === 'home') {
+    return <HomePage onGetStarted={showEditor} onHome={showHome} />;
   }
 
   return (
